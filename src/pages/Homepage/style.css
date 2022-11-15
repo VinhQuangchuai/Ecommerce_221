@@ -1,0 +1,21 @@
+.latest-products {
+    height: 850px;
+    overflow: hidden;
+}
+
+.display {
+    display: flex;
+    align-items: center;
+}
+
+.product-card-img img{
+    width: 70%;
+}
+
+.product-card-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}

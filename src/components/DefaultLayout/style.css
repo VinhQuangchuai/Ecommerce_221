@@ -1,0 +1,64 @@
+
+.defaultlayout-wrapper {
+    width: 80%;
+    margin: auto;
+    padding-top: 50px;
+}
+
+.default-filter {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: sticky;
+    top: 24px;
+}
+
+.default-filter span {
+    font-size: 21px;
+}
+
+.form-check-label {
+    font-size: 14px !important;
+}
+
+.filter-type{
+    padding: 16px 0; 
+}
+
+.form-check {
+    padding-top: 4px !important;
+}
+
+.product-cost {
+    font-size: 14px;
+    margin: 8px 0 0 0;
+}
+
+.btn-tag {
+    border-radius: 30px;
+    border: 1px solid #ebebeb;
+    padding: 0px 20px;
+    margin: 4px 2px;
+    background-color: white;
+    transition: 0.1s ease-in;
+
+}
+
+.btn-tag span{
+    font-size: 12px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-tag:hover{
+    background-color: #266cfb;
+    color: white;
+    
+}
+
+.active-tag {
+    background-color: #266cfb !important;
+    color: white !important;
+}
