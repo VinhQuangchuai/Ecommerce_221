@@ -2,6 +2,8 @@
 import '../../assets/css/index.css'
 import '../../assets/css/grid.css';
 import '../../assets/css/fonts.css';
+import LifeStyle1 from '../../assets/imgs/JBL_Quantum400_Lifestyle1.png';
+import LifeStyle2 from '../../assets/imgs/JBL_TUNE220TWS_Lifestyle_black.png';
 import './style.css'
 import { ProductContext } from '../../components/Context';
 import React, { useState } from 'react';
@@ -221,7 +223,11 @@ export const HomePage = () => {
                                             <p class="sp-item-description">
                                                 {data.data.length > 0 && data.data[4].product_description}
                                             </p>
-                                            <button class="btn-flat btn-hover">shop now</button>
+                                            <Link to={data.data.length > 0 && `/shop/${data.data[4].idproduct}`}>
+                                                <button className="btn-flat btn-hover">
+                                                    <span>shop now</span>
+                                                </button>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
@@ -231,42 +237,38 @@ export const HomePage = () => {
                         <div className="section">
                             <div className="container">
                                 <div className="section-header">
-                                    <h2>Latest product</h2>
+                                    <h2>latest blog</h2>
                                 </div>
-                                <div className={`row ${viewBS}`}>
-                                    {
-                                        data.data.map((product, index) => (
-                                            <div className="col-3 col-md-6 col-sm-12" key={index}>
-                                                <div className="product-card">
-                                                    <div className="product-card-img">
-                                                        <img src={`https://hcmut-e-commerce.herokuapp.com/${product.product_image01}`} alt=""/>
-                                                        <img src={`https://hcmut-e-commerce.herokuapp.com/${product.product_image02}`} alt=""/>
-                                                    </div>
-                                                    <div className="product-card-info">
-                                                        <div className="product-btn-home">
-                                                            <a href={`/shop/${product.idproduct}`} className="btn-flat btn-hover btn-shop-now">shop now</a>
-                                                            <button className="btn-flat btn-hover btn-cart-add">
-                                                                <i><BsCartPlus/></i>
-                                                            </button>
-                                                            <button className="btn-flat btn-hover btn-cart-add">
-                                                                <i><BsHeart/></i>
-                                                            </button>
-                                                        </div>
-                                                        <div className="product-card-name">
-                                                            {product.product_name}
-                                                        </div>
-                                                        <div className="product-card-price">
-                                                            <span><del>${product.product_old_price}</del></span>
-                                                            <span className="curr-price">${product.product_present_price}</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))
-                                    }
+                                <div className="blog">
+                                    <div className="blog-img">
+                                        <img src={LifeStyle1} alt=""/>
+                                    </div>
+                                    <div className="blog-info">
+                                        <div className="blog-title">
+                                            Lorem ipsum dolor sit amet
+                                        </div>
+                                        <div className="blog-preview">
+                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi, eligendi dolore. Sapiente omnis numquam mollitia asperiores animi, veritatis sint illo magnam, voluptatum labore, quam ducimus! Nisi doloremque praesentium laudantium repellat.
+                                        </div>
+                                        <button class="btn-flat btn-hover">read more</button>
+                                    </div>
+                                </div>
+                                <div className="blog row-revere">
+                                    <div className="blog-img">
+                                        <img src={LifeStyle2} alt=""/>
+                                    </div>
+                                    <div className="blog-info">
+                                        <div className="blog-title">
+                                            Lorem ipsum dolor sit amet
+                                        </div>
+                                        <div className="blog-preview">
+                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi, eligendi dolore. Sapiente omnis numquam mollitia asperiores animi, veritatis sint illo magnam, voluptatum labore, quam ducimus! Nisi doloremque praesentium laudantium repellat.
+                                        </div>
+                                        <button className="btn-flat btn-hover">read more</button>
+                                    </div>
                                 </div>
                                 <div className="section-footer">
-                                    <a  className="btn-flat btn-hover" onClick={handleClickBS}>{viewBS === "" ? "Hide" : "view all"}</a>
+                                    <a href="/#" class="btn-flat btn-hover">view all</a>
                                 </div>
                             </div>
                         </div>
