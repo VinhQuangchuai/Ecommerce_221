@@ -11,10 +11,10 @@ import {
   Row,
   Select,
 } from "antd";
-import "./index.css";
+import "./style.css";
 const { Option } = Select;
 
-const Checkout = () => {
+export const Checkout = () => {
   const [form] = Form.useForm();
   const formItemLayout = {
     labelCol: {
@@ -252,4 +252,3 @@ const Checkout = () => {
   );
 };
 
-export default Checkout;
