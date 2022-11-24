@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   AutoComplete,
   Button,
@@ -11,11 +12,50 @@ import {
   Row,
   Select,
 } from "antd";
-import "./style.css";
+import { Convert } from "easy-currencies";
+
+// import "./index.css";
 const { Option } = Select;
 
+const initialFvalues = {
+  name: "",
+  phone: "",
+  email: "",
+  address: "",
+  ward: "",
+  district: "",
+  province: "",
+};
+
+const initialProvince = [
+  {
+    ProvinceId: 269,
+    ProvinceName: "Lào Cai",
+  },
+  {
+    ProvinceId: 270,
+    ProvinceName: "Hà Giang",
+  },
+];
+
+const currenciesConvert = async (vnd) => {
+  const convert = await Convert(parseFloat(vnd))
+    .from("VND")
+    .to("USD");
+  return convert;
+};
+
 export const Checkout = () => {
+  const [value, setValue] = useState(initialFvalues);
+  const [provinces, setProvinces] = useState(initialProvince);
+  const [districts, setDistricts] = useState([]);
+  const [wards, setWards] = useState([]);
+  const [shippingFee, setShippingFee] = useState(0);
+  const [total, setTotal] = useState(0);
+
   const [form] = Form.useForm();
+
+  
   const formItemLayout = {
     labelCol: {
       sm: {
@@ -28,9 +68,156 @@ export const Checkout = () => {
       },
     },
   };
+
+  const handleChangeProvince = async (provinceId) => {
+    value.province = provinceId;
+    console.log(provinceId);
+
+    if (provinceId === 0) {
+      setDistricts([]);
+      setWards([]);
+    } else {
+      await axios
+        .get(
+          `https://online-gateway.ghn.vn/shiip/public-api/master-data/district`,
+          {
+            headers: {
+              token: "c6109bdb-6597-11ed-9dc6-f64f768dbc22",
+            },
+            params: {
+              province_id: provinceId,
+            },
+          }
+        )
+        .then((res) => {
+          setDistricts(res.data.data);
+        });
+    }
+  };
+
+  const handleChangeDistrict = async (districtId) => {
+    value.district = districtId;
+    console.log(districtId);
+
+    if (districtId === 0) {
+      setWards([]);
+    } else {
+      await axios
+        .get(
+          "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward",
+          {
+            headers: {
+              token: "c6109bdb-6597-11ed-9dc6-f64f768dbc22",
+            },
+            params: {
+              district_id: districtId,
+            },
+          }
+        )
+        .then((res) => {
+          setWards(res.data.data);
+        });
+    }
+  };
+
+  const handleChangeWard = async (wardId) => {
+    value.ward = wardId;
+    console.log(wardId);
+    let shipService = [];
+    await axios
+      .get(
+        "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services",
+        {
+          headers: {
+            token: "c6109bdb-6597-11ed-9dc6-f64f768dbc22",
+          },
+          params: {
+            shop_id: 3457944,
+            from_district: 1452,
+            to_district: value.district,
+          },
+        }
+      )
+      .then((res) => {
+        shipService = res.data.data;
+        console.log(shipService);
+      });
+
+    await axios
+      .get(
+        "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
+        {
+          headers: {
+            token: "c6109bdb-6597-11ed-9dc6-f64f768dbc22",
+            shop_id: 3457944,
+          },
+          params: {
+            service_id: shipService[0].service_id,
+            insurance_value: 50000,
+            coupon: null,
+            to_ward_code: value.ward,
+            to_district_id: value.district,
+            from_district_id: 1452,
+            weight: 500,
+            length: 30,
+            width: 30,
+            height: 50,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data.data.total);
+        currenciesConvert(res.data.data.total).then((res) => {
+          setShippingFee(res.toFixed(2));
+        });
+      });
+  };
+
+  const onPayment = (e) => {
+    console.log(parseFloat(total))
+    console.log(parseFloat(shippingFee))
+    console.log(parseFloat(total) + parseFloat(shippingFee))
+    const data = JSON.stringify({
+      amount: parseFloat(total) + parseFloat(shippingFee),
+    });
+    const config = {
+      method: "post",
+      url: "http://localhost:3001/api/payment",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios(config).then((res) => {
+      console.log(res.data);
+      window.location.replace(res.data);
+    });
+  };
+
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
   };
+
+  useEffect(() => {
+    const getProvinces = async () => {
+      const config = {
+        method: "get",
+        url:
+          "https://online-gateway.ghn.vn/shiip/public-api/master-data/province",
+        headers: {
+          token: "c6109bdb-6597-11ed-9dc6-f64f768dbc22",
+        },
+      };
+      axios(config).then((res) => {
+        console.log(res.data);
+        setProvinces(res.data.data);
+      });
+    };
+    getProvinces();
+    provinces.map((province) => console.log(province));
+  }, []);
+
   return (
     <div className="flex flex-row w-full justify-center my-20">
       <div className="mr-5">
@@ -75,19 +262,68 @@ export const Checkout = () => {
           </Row>
 
           <Form.Item
-            name="country"
-            label="Country"
+            name="city"
+            label="City"
             rules={[
               {
                 required: true,
-                message: "Please select country!",
+                message: "Please select province!",
               },
             ]}
           >
-            <Select placeholder="Select a country">
-              <Option value="vietnam">Viet Nam</Option>
-              <Option value="singapore">Singapore</Option>
-              <Option value="other">Other</Option>
+            <Select
+              placeholder="Select a province"
+              onChange={(value) => handleChangeProvince(value)}
+            >
+              {provinces.map((province, index) => (
+                <Option key={index} value={province.ProvinceID}>
+                  {province.ProvinceName}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            name="district"
+            label="District"
+            rules={[
+              {
+                required: true,
+                message: "Please select district!",
+              },
+            ]}
+          >
+            <Select
+              placeholder="Select a district"
+              onChange={(value) => handleChangeDistrict(value)}
+            >
+              {districts.map((district, index) => (
+                <Option key={index} value={district.DistrictID}>
+                  {district.DistrictName}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            name="ward"
+            label="Ward"
+            rules={[
+              {
+                required: true,
+                message: "Please select city!",
+              },
+            ]}
+          >
+            <Select
+              placeholder="Select ward"
+              onChange={(value) => handleChangeWard(value)}
+            >
+              {wards.map((ward, index) => (
+                <Option key={index} value={ward.WardCode}>
+                  {ward.WardName}
+                </Option>
+              ))}
             </Select>
           </Form.Item>
 
@@ -109,49 +345,6 @@ export const Checkout = () => {
             <Input placeholder="Apartment, suite, unit etc. (optional)" />
           </Form.Item>
 
-          <Form.Item
-            name="town"
-            label="Town/City"
-            rules={[
-              {
-                required: true,
-                message: "Please input your address!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Row>
-            <Col span={12}>
-              <Form.Item
-                name="state"
-                label="State/County"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your state/country!",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="postcode"
-                label="Postcode/Zip"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your postcode/Zip!",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
           <Row>
             <Col span={12}>
               <Form.Item
@@ -224,11 +417,13 @@ export const Checkout = () => {
           </div>
           <div className="flex justify-between border-b-2 py-6">
             <span className="text-base font-medium">Shipping</span>
-            <span className="font-medium text-gray-400">Free shipping</span>
+            <span className="font-medium text-gray-400">{shippingFee}</span>
           </div>
           <div className="flex justify-between border-b-2 py-6">
             <span className="text-base font-medium">Total</span>
-            <span className="text-base font-medium text-blue-500">$429</span>
+            <span className="text-base font-medium text-blue-500">
+              ${parseFloat(total) + parseFloat(shippingFee)}
+            </span>
           </div>
           <div className="py-6">
             <p className="text-base font-medium">Direct bank transfer</p>
@@ -240,9 +435,7 @@ export const Checkout = () => {
           </div>
         </div>
         <button
-          onClick={() => {
-            console.log(form.getFieldsValue());
-          }}
+          onClick={onPayment}
           className=" bg-blue-500 text-white font-bold text-lg p-2 rounded-xl hover:bg-blue-400 mt-10 w-[300px] h-[50px] mx-auto"
         >
           PLACE ORDER
@@ -251,4 +444,3 @@ export const Checkout = () => {
     </div>
   );
 };
-
