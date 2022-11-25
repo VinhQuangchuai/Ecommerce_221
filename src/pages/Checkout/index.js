@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import {
   AutoComplete,
   Button,
@@ -16,7 +18,6 @@ import { Convert } from "easy-currencies";
 
 // import "./index.css";
 const { Option } = Select;
-
 const initialFvalues = {
   name: "",
   phone: "",
@@ -39,9 +40,7 @@ const initialProvince = [
 ];
 
 const currenciesConvert = async (vnd) => {
-  const convert = await Convert(parseFloat(vnd))
-    .from("VND")
-    .to("USD");
+  const convert = await Convert(parseFloat(vnd)).from("VND").to("USD");
   return convert;
 };
 
@@ -52,10 +51,10 @@ export const Checkout = () => {
   const [wards, setWards] = useState([]);
   const [shippingFee, setShippingFee] = useState(0);
   const [total, setTotal] = useState(0);
+  const navigate = useNavigate();
 
   const [form] = Form.useForm();
 
-  
   const formItemLayout = {
     labelCol: {
       sm: {
@@ -174,9 +173,9 @@ export const Checkout = () => {
   };
 
   const onPayment = (e) => {
-    console.log(parseFloat(total))
-    console.log(parseFloat(shippingFee))
-    console.log(parseFloat(total) + parseFloat(shippingFee))
+    console.log(parseFloat(total));
+    console.log(parseFloat(shippingFee));
+    console.log(parseFloat(total) + parseFloat(shippingFee));
     const data = JSON.stringify({
       amount: parseFloat(total) + parseFloat(shippingFee),
     });
@@ -189,10 +188,28 @@ export const Checkout = () => {
       data: data,
     };
 
-    axios(config).then((res) => {
-      console.log(res.data);
-      window.location.replace(res.data);
-    });
+    axios(config)
+      .then((res) => {
+        console.log(res.data);
+        window.location.replace(res.data);
+        Swal.fire({
+          title: "Payment Success",
+          text: "Thank you for your order!",
+          icon: "success",
+          confirmButtonText: "OK",
+        }).then((result) => {
+          navigate("/");
+        });
+      })
+      .catch((err) => {
+        Swal.fire({
+          title: "Payment Failed",
+          text: "There is some error in payment process",
+          icon: "error",
+          confirmButtonText: "Close",
+        });
+        console.log(err);
+      });
   };
 
   const onFinish = (values) => {
@@ -203,8 +220,7 @@ export const Checkout = () => {
     const getProvinces = async () => {
       const config = {
         method: "get",
-        url:
-          "https://online-gateway.ghn.vn/shiip/public-api/master-data/province",
+        url: "https://online-gateway.ghn.vn/shiip/public-api/master-data/province",
         headers: {
           token: "c6109bdb-6597-11ed-9dc6-f64f768dbc22",
         },
