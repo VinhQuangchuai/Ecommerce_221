@@ -192,14 +192,14 @@ export const Checkout = () => {
       .then((res) => {
         console.log(res.data);
         window.location.replace(res.data);
-        Swal.fire({
-          title: "Payment Success",
-          text: "Thank you for your order!",
-          icon: "success",
-          confirmButtonText: "OK",
-        }).then((result) => {
-          navigate("/");
-        });
+        // Swal.fire({
+        //   title: "Proceed to Checkout",
+        //   text: "Thank you for your order!",
+        //   icon: "success",
+        //   confirmButtonText: "OK",
+        // }).then((result) => {
+        //   navigate("/");
+        // });
       })
       .catch((err) => {
         Swal.fire({
