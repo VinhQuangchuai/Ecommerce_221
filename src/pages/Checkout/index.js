@@ -191,7 +191,7 @@ export const Checkout = () => {
     axios(config)
       .then((res) => {
         console.log(res.data);
-        window.location.replace(res.data);
+        window.open(res.data, "_blank").focus();
         Swal.fire({
           title: "Payment Success",
           text: "Thank you for your order!",
