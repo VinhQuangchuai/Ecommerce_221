@@ -16,7 +16,7 @@ import {
 } from "antd";
 import { Convert } from "easy-currencies";
 
-// import "./index.css";
+import "./style.css";
 const { Option } = Select;
 const initialFvalues = {
   name: "",
@@ -237,7 +237,7 @@ export const Checkout = () => {
   return (
     <div className="flex flex-row w-full justify-center my-20">
       <div className="mr-5">
-        <h1 className="text-3xl font-semibold">Billing details</h1>
+        <h1 className="text-3xl font-semibold mb-4">Billing details</h1>
         <Form
           {...formItemLayout}
           form={form}
@@ -247,7 +247,7 @@ export const Checkout = () => {
           onFinish={onFinish}
         >
           <Row>
-            <Col span={12}>
+            <Col span={12} className="first-name">
               <Form.Item
                 name="firstname"
                 label="First Name"
@@ -261,7 +261,7 @@ export const Checkout = () => {
                 <Input />
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col span={12} className="last-name">
               <Form.Item
                 name="lastname"
                 label="Last Name"
@@ -362,7 +362,7 @@ export const Checkout = () => {
           </Form.Item>
 
           <Row>
-            <Col span={12}>
+            <Col span={12} className="first-name">
               <Form.Item
                 name="phone"
                 label="Phone"
@@ -376,7 +376,7 @@ export const Checkout = () => {
                 <Input />
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col span={12} className="last-name">
               <Form.Item
                 name="email"
                 label="E-mail"
@@ -415,7 +415,7 @@ export const Checkout = () => {
         </Form>
       </div>
       <div className="flex flex-col justify-start">
-        <h1 className="text-3xl font-semibold">Your order</h1>
+        <h1 className="text-3xl font-semibold mb-4">Your order</h1>
         <div className="orderInfo w-[450px] bg-gray-100 p-10">
           <div className="flex justify-between border-b-2 pb-6">
             <span className="text-base font-medium">Product</span>

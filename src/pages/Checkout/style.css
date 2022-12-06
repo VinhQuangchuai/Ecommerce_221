@@ -10,3 +10,11 @@
 .street-input {
     margin-bottom: 12px!important;
 }
+
+.first-name {
+    padding-left: 0!important;  
+}
+
+.last-name {
+    padding-right: 0!important;
+}
