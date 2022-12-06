@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {getPayment} from "../../api/product"
 import {
   AutoComplete,
   Button,
@@ -176,19 +177,19 @@ export const Checkout = () => {
     console.log(parseFloat(total));
     console.log(parseFloat(shippingFee));
     console.log(parseFloat(total) + parseFloat(shippingFee));
-    const data = JSON.stringify({
-      amount: parseFloat(total) + parseFloat(shippingFee),
-    });
-    const config = {
-      method: "post",
-      url: "http://localhost:3001/api/payment",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
+    // const data = JSON.stringify({
+    //   amount: parseFloat(total) + parseFloat(shippingFee),
+    // });
+    // const config = {
+    //   method: "post",
+    //   url: "https://hcmut-e-commerce.herokuapp.com/api/payment",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   data: data,
+    // };
 
-    axios(config)
+    getPayment({amount: parseFloat(total) + parseFloat(shippingFee)})
       .then((res) => {
         console.log(res.data);
         window.location.replace(res.data);
