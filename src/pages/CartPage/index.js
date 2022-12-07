@@ -2,9 +2,9 @@ import './style.css'
 import React, { useState } from 'react'
 import { formatCurrency } from '../../ultil'
 import { ProductContext } from '../../components/Context'
+import { Link } from 'react-router-dom'
 
-
-const voucherlist = [
+export const voucherlist = [
     {
         code: "VOUCHER2022",
         price: 20000
@@ -28,7 +28,7 @@ export const CartPage = () => {
     const total = (cart) => {
         var total = 0
         // console.log(cart.cart)
-        cart.cart.forEach(i => (
+        select.forEach(i => (
             total += Number(i.product.product_present_price)
         ))
         
@@ -83,20 +83,23 @@ export const CartPage = () => {
     //     updateShape("rectangle", 1);
     // }
 
-    const handleChange = (item) => {
+    const handleChange = (item, cart) => {
         setChecked(false)
         var selected = select.find(i => i.product.product_name === item.product.product_name)
         if (selected === undefined) {
             setSelect([...select, item])
+            cart.setTmpCart(cart.tmpcart.filter(i => i.product.product_name !== item.product.product_name))
         }
         else {
             setSelect(select.filter(i => i.product.product_name != item.product.product_name))
+            cart.setDataToTmp(item)
         }
     }
 
     const handelDelete = (item, cart) => {
         var selected = select.find(i => i.product.product_name === item.product.product_name)
         cart.setCart(cart.cart.filter(i => i.product.product_name !== item.product.product_name))
+        cart.setTmpCart(cart.tmpcart.filter(i => i.product.product_name !== item.product.product_name))
         setSelect(select.filter(i => i.product.product_name !== item.product.product_name))
     }
 
@@ -104,11 +107,22 @@ export const CartPage = () => {
         setChecked(!checked)
         if (!checked) {
             setSelect(cart.cart)
-
+            cart.setTmpCart([])
         }
-        else setSelect([])
+        else {
+            setSelect([])
+            cart.setTmpCart(cart.cart)
+        }
     }
 
+
+    const handleCLick = (cart) => {
+        cart.setPayment(select)
+        setVoucher()
+        // cart.setCart(cart.cart.filter(i => i.product.product_name !== item.product.product_name))
+        // cart.setCart(cart.tmpcart)   
+        setSelect([])
+    }
 
     return (
         <ProductContext.Consumer>
@@ -141,7 +155,7 @@ export const CartPage = () => {
                                                     <div className="cart-item" key={index}>
                                                         <div className='cart-select' style={{width: "100%"}}>
                                                             <div className='select-checkbox'>
-                                                                <input type="checkbox" checked={check(i)} onChange={() =>handleChange(i)}/>
+                                                                <input type="checkbox" checked={check(i)} onChange={() =>handleChange(i, cart)}/>
                                                                 
                                                                 <img src={`https://hcmut-e-commerce.herokuapp.com/${i.product.product_image01}`} alt="" className="produvt-thumbnail"/>
                                                                 <div className='cart_product-info'>
@@ -168,7 +182,7 @@ export const CartPage = () => {
                                 <div className='cart-page__cart'>
                                         <span>Thông tin đơn hàng</span>
                                         <div className='cart-detail'>
-                                            <span>Tạm tính ({cart.cart.length} sản phẩm)</span>
+                                            <span>Tạm tính ({select.length} sản phẩm)</span>
                                             <span>{formatCurrency(total(cart))}</span>
                                         </div>
                                         <div className='cart-detail'>
@@ -196,8 +210,15 @@ export const CartPage = () => {
                                             <strong>Tổng cộng</strong>
                                             <strong>{formatCurrency(getTotal(cart))}</strong>
                                         </div>
-                                        <button type="button" className="btn btn-outline-primary col-12" >Xác nhận giỏ hàng ({cart.cart.length})</button>
-                                        {/* onClick={handleCLick} */}
+                                        <Link to={`${select.length > 0 ? '/pay' : '#'}`} style={{width: "100%"}}>
+                                            <button type="button" className="btn btn-outline-primary col-12" onClick={()=>handleCLick(cart)} 
+                                            style={{width: "100%"}}>
+                                                
+                                                    Xác nhận giỏ hàng
+                                                ({select.length})
+                                            </button>
+                                        </Link> 
+                                        
                                     </div>
                                     }
                         </div>

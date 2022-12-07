@@ -64,6 +64,10 @@ export const HomePage = () => {
         else setViewBS("")
     }
 
+    const AddToCart = (data, product) => {
+        data.setDataToCart({product, "quantity": 1})
+    }
+
     return (
         <ProductContext.Consumer>
             {
@@ -189,7 +193,7 @@ export const HomePage = () => {
                                                         <div className="product-btn-home">
                                                             <a href={`/shop/${product.idproduct}`} className="btn-flat btn-hover btn-shop-now">shop now</a>
                                                             <button className="btn-flat btn-hover btn-cart-add">
-                                                                <i><BsCartPlus/></i>
+                                                                <i onClick={()=>AddToCart(data, product)}><BsCartPlus/></i>
                                                             </button>
                                                             <button className="btn-flat btn-hover btn-cart-add">
                                                                 <i><BsHeart/></i>
@@ -253,7 +257,7 @@ export const HomePage = () => {
                                                         <div className="product-btn-home">
                                                             <a href={`/shop/${product.idproduct}`} className="btn-flat btn-hover btn-shop-now">shop now</a>
                                                             <button className="btn-flat btn-hover btn-cart-add">
-                                                                <i><BsCartPlus/></i>
+                                                                <i onClick={()=>AddToCart(data, product)}><BsCartPlus/></i>
                                                             </button>
                                                             <button className="btn-flat btn-hover btn-cart-add">
                                                                 <i><BsHeart/></i>
