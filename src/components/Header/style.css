@@ -1,0 +1,20 @@
+.bg-second {
+    background-color: white;
+}
+
+.bg-main, .mid-header {
+    background-color: whitesmoke;
+}
+
+.search input {
+    background-color: white;
+}
+
+.user-menu span{
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.user-menu span:hover {
+    color: rgb(45, 45, 245);
+}

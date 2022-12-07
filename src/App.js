@@ -9,12 +9,16 @@ import Footer from './components/Footer';
 import { fetchPosts } from './api/product';
 function App() {
 
-  const [page, setPage] = useState(1)
+  
   const [data, setData] = useState([])
+  const [cart, setCart] = useState([])
+
 
   useEffect(() => {
     fetchPosts().then((response) => setData(response.data))
 }, [])
+
+  const [page, setPage] = useState(1) 
 
   useEffect(() => {
       window.scrollTo({
@@ -29,29 +33,35 @@ function App() {
     }
     else setPage(1)
   }
-  return (
-    <Router>
-      <div className="App">
-       <ProductContext.Provider value={{data, setData}}>
-        <Header/>
-         <Routes>
-          {
-            publishRoutes.map((route, id) => {
-              const Page = route.component
-              return (
-                <Route key={id} path={route.path} element={<Page/>}/>
-              )
-            })
-          }
-         </Routes>
-         <Footer/>
 
-          <p className='to-top' onClick={handleClick}>
-              <i className="fa-sharp fa-solid fa-chevron-up"></i>
-          </p>
-       </ProductContext.Provider>
-      </div>
-    </Router>
+  const setDataToCart = (data) => {
+    setCart([...cart, data])
+  }
+
+  return (
+    <ProductContext.Provider value={{data, setData, cart, setDataToCart, setCart}}>
+      <Router>
+        <div className="App">
+          <Header/>
+          <Routes>
+            {
+              publishRoutes.map((route, id) => {
+                const Page = route.component
+                return (
+                  <Route key={id} path={route.path} element={<Page/>}/>
+                )
+              })
+            }
+          </Routes>
+          <Footer/>
+
+            <p className='to-top' onClick={handleClick}>
+                <i className="fa-sharp fa-solid fa-chevron-up"></i>
+            </p>
+        </div>
+      </Router>
+    </ProductContext.Provider>
+
   );
 }
 

@@ -4,7 +4,8 @@ import React from 'react';
 import '../../assets/css/index.css'
 import '../../assets/css/grid.css';
 import '../../assets/css/fonts.css';
-
+import './style.css'
+import { Link } from 'react-router-dom';
 
 export default function Header() {
     return (
@@ -57,7 +58,7 @@ export default function Header() {
 
                 <div className="bg-main">
                     <div className="mid-header container">
-                        <a href="/#" className="logo">ABELO</a>
+                        <Link to={'./'}><span  className="logo">ABELO</span></Link>
                         <div className="search">
                             <input type="text" placeholder="Search" />
                             <BiSearchAlt style={{
@@ -72,7 +73,9 @@ export default function Header() {
                         <ul className="user-menu">
                             <li><a href="/#"><BiBell /></a></li>
                             <li><a href="/#"><BiUserCircle /></a></li>
-                            <li><a href="/#"><BiCart /></a></li>
+                            <li>
+                                <Link to={'/cart'}><span><BiCart /></span></Link>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -80,13 +83,15 @@ export default function Header() {
                 <div className="bg-second">
                     <div className="bottom-header container">
                         <ul className="main-menu">
-                            <li><a href="/#">Home</a></li>
+                            <li>
+                                <Link to={'/'}><a href="#">Home</a></Link>
+                            </li>
 
                             <li className="mega-dropdown">
-                                <a href="/shop">Shop</a>
+                                <Link to={'/shop'}><a href="#">Shop</a></Link>
                             </li>
-                            <li><a href="/#">blog</a></li>
-                            <li><a href="/#">contact</a></li>
+                            <li><a href="#">blog</a></li>
+                            <li><a href="#">contact</a></li>
                         </ul>
                     </div>
                 </div>

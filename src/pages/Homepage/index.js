@@ -4,7 +4,7 @@ import '../../assets/css/grid.css';
 import '../../assets/css/fonts.css';
 import './style.css'
 import { ProductContext } from '../../components/Context';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { BsChevronRight, BsChevronLeft, BsCartPlus, BsHeart } from 'react-icons/bs';
 
@@ -12,6 +12,13 @@ import { BsChevronRight, BsChevronLeft, BsCartPlus, BsHeart } from 'react-icons/
 export const HomePage = () => {
     const [viewLast, setViewLast] = useState("latest-products")
     const [viewBS, setViewBS] = useState("latest-products")
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
+    },[])
 
     React.useEffect(() => {
         var slide_index = 0;

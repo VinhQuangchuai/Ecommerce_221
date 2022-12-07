@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'
 import { getProductById } from '../../api/product';
 import { BsFillStarFill, BsCartPlus, BsHeart } from 'react-icons/bs';
@@ -7,7 +7,7 @@ import { ProductContext } from '../../components/Context';
 import '../../assets/css/index.css'
 import '../../assets/css/grid.css';
 import '../../assets/css/fonts.css';
-
+import { Link } from 'react-router-dom';
 
 export const ProductPage = () => {
 
@@ -18,7 +18,19 @@ export const ProductPage = () => {
     const match = useParams({id: Number})
     useEffect(() => {
         getProductById(match.id).then(res => setProduct(res.data))
-    }, [])
+    }, [match.id])
+
+    const AddToCart = (func) => {
+        func.setDataToCart({product, "quantity": 1})
+    }
+
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
+    },[match.id])
 
     return (
         <ProductContext.Consumer>
@@ -99,7 +111,7 @@ export const ProductPage = () => {
                                             </span>
                                         </div>
                                         <div>
-                                            <button className="btn-flat btn-hover">add to cart</button>
+                                            <button className="btn-flat btn-hover" onClick={() => AddToCart(data)}>add to cart</button>
                                         </div>
                                     </div>
                                 </div>
@@ -268,7 +280,7 @@ export const ProductPage = () => {
                                                     </div>
                                                     <div className="product-card-info">
                                                         <div className="product-btn-home">
-                                                            <a href={`/shop/${product.idproduct}`} className="btn-flat btn-hover btn-shop-now">shop now</a>
+                                                            <Link to={`/shop/${product.idproduct}`}><span className="btn-flat btn-hover btn-shop-now">shop now</span></Link>
                                                             <button className="btn-flat btn-hover btn-cart-add">
                                                                 <i><BsCartPlus/></i>
                                                             </button>
