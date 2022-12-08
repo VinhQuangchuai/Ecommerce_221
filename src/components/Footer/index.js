@@ -3,10 +3,11 @@ import React from 'react';
 import '../../assets/css/index.css'
 import '../../assets/css/grid.css';
 import '../../assets/css/fonts.css';
+import './style.css'
 
 export default function Footer() {
     return (
-        <footer className="bg-second">
+        <footer className="bg-second footer">
             <div className="container">
                 <div className="row">
                     <div className="col-3 col-md-6">

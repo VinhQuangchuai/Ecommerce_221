@@ -20,6 +20,7 @@ export const Product = (props) => {
     }
 
     const AddToCart = (data, product) => {
+        alert("Thêm thành cônng")
         data.setDataToCart({product, "quantity": 1})
     }
 

@@ -1,8 +1,8 @@
 import './style.css'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { formatCurrency } from '../../ultil'
 import { ProductContext } from '../../components/Context'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export const voucherlist = [
     {
@@ -19,20 +19,23 @@ export const voucherlist = [
 
 export const CartPage = () => {
 
+    const navigator = useNavigate()
+
+    useEffect(() => {
+        if(localStorage.getItem('current-user') === null) {
+            navigator('/login')
+        }
+    },[localStorage.getItem('current-user')])
     
     const [voucher, setVoucher] = useState()
     const [checked, setChecked] = useState(false)
-    // const [data, setData] = useState(product)
     const [select, setSelect] = useState([])
 
     const total = (cart) => {
         var total = 0
-        // console.log(cart.cart)
         select.forEach(i => (
             total += Number(i.product.product_present_price)
         ))
-        
-        console.log(total)
         return total
     }
 
@@ -51,19 +54,6 @@ export const CartPage = () => {
         sum += getTrans(cart) + total(cart)
         return sum
     }
-
-
-    // const [theArrayOfObjects, setTheArrayOfObjects] = useState([
-    //     { color: "blue", shape: "square" }, 
-    //     { color: "red", shape: "circle" }
-    //     ]);
-
-    // const updateShape = (shape, index) => {
-    //         setTheArrayOfObjects(state => state.map((el, i) => i === index
-    //           ? { ...el, shape }
-    //           : el,
-    //          ));
-    //       };
         
     const check = (item) => {
         if(checked) {
@@ -78,10 +68,6 @@ export const CartPage = () => {
         }
     }
     
-
-    // const handleCLick = () => {
-    //     updateShape("rectangle", 1);
-    // }
 
     const handleChange = (item, cart) => {
         setChecked(false)
@@ -119,11 +105,8 @@ export const CartPage = () => {
     const handleCLick = (cart) => {
         cart.setPayment(select)
         setVoucher()
-        // cart.setCart(cart.cart.filter(i => i.product.product_name !== item.product.product_name))
-        // cart.setCart(cart.tmpcart)   
         setSelect([])
     }
-
     return (
         <ProductContext.Consumer>
             {
@@ -135,7 +118,7 @@ export const CartPage = () => {
                                         <span style={{marginBottom: "27px"}}>
                                             Không có sản phẩm nào trong giỏ hàng
                                         </span>
-                                        <button type="button" class="btn btn-outline-warning"><a href="/">TIẾP TỤC MUA SẮM</a></button>
+                                        <button type="button" class="btn btn-outline-warning"><Link to={'/shop'}><a >TIẾP TỤC MUA SẮM</a></Link></button>
                                     </div> :
                                     <div className='cart-page row'>
                             <div className='cart-page__container col-7  '>

@@ -7,10 +7,27 @@ import { useState } from 'react'
 import { formatCurrency } from '../../ultil'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
+
 export const PayPage = () => {
     
+    const [transInfo, setTransInfo] = useState({
+        name: "",
+        phone: "",
+        id: "",
+        address: "",
+        city: "",
+        district: "",
+        wards:"",
+        curent: "off",
+        })
+
+    const navigate = useNavigate()
+
+
     const [voucher, setVoucher] = useState()
     const [current, setCurrent] = useState("off")
+    const [role, setRole] = useState(false)
     const total = (cart) => {
         var total = 0
         // console.log(cart.cart)
@@ -43,8 +60,20 @@ export const PayPage = () => {
     }
 
     const handleClick = (cart) => {
-        cart.setCart(cart.tmpcart)
-        cart.setPayment([])
+        if(role) {
+            alert("Mua hàng thành công")
+            cart.setToOrdered({data: cart.payment, info: transInfo, time: moment(), totalprice: getTotal(cart)})
+            cart.setCart(cart.tmpcart)
+            cart.setPayment([])
+            setRole(false)
+            navigate('/cart')
+        }
+    }
+    console.log(transInfo)
+
+
+    const handleChange = () => {
+        setRole(!role)
     }
 
     return (
@@ -59,43 +88,43 @@ export const PayPage = () => {
                                     <div className='col-6 user-infor'>
                                         <div>
                                             <span>Họ và tên</span>
-                                            <input type="text" placeholder='Họ và tên'/>
+                                            <input type="text" placeholder='Họ và tên' onChange={(e) => setTransInfo({...transInfo, "name": e.target.value})}/>
                                         </div>
                                         <div>
                                             <span>Số điện thoại</span>
-                                            <input type="text" placeholder='Số điện thoại'/>
+                                            <input type="text" placeholder='Số điện thoại' onChange={(e) => setTransInfo({...transInfo, "phone": e.target.value})}/>
                                         </div>
                                         <div>
                                             <span>Số CMND/ CCCD</span>
-                                            <input type="text" placeholder='Số CMND/ CCCD'/>
+                                            <input type="text" placeholder='Số CMND/ CCCD' onChange={(e) => setTransInfo({...transInfo, "id": e.target.value})}/>
                                         </div>
                                     </div>
                                     <div className='col-6 user-infor'>
                                         <div>
                                             <span>Địa chỉ nhận hàng</span>
-                                            <input type="text" placeholder='Vui lòng nhập địa chỉ của bạn'/>
+                                            <input type="text" placeholder='Vui lòng nhập địa chỉ của bạn' onChange={(e) => setTransInfo({...transInfo, "address": e.target.value})}/>
                                         </div>
                                         <div>
                                             <span>Tỉnh/ Thành phố</span>
-                                            <select class="form-select" aria-label="Default select example">
+                                            <select class="form-select" aria-label="Default select example" onChange={(e) => setTransInfo({...transInfo, "city": e.target.value})}>
                                                 <option selected>Vui lòng chọn tỉnh/ thành phố</option>
-                                                <option value="1">Thành phố Hồ Chí Minh</option>
+                                                <option value="Thành phố Hồ Chí Minh">Thành phố Hồ Chí Minh</option>
                                             </select>
                                         </div>
                                         <div>
                                             <span>Quận/ Huyện</span>
-                                            <select class="form-select" aria-label="Default select example">
+                                            <select class="form-select" aria-label="Default select example" onChange={(e) => setTransInfo({...transInfo, "district": e.target.value})}>
                                                 <option selected>Vui lòng chọn quận/ huyện</option>
-                                                <option value="1">Thủ Đức</option>
+                                                <option value="Thủ Đức">Thủ Đức</option>
                                             </select>
                                         </div>
                                         <div>
                                             <span>Phường/ Xã</span>
-                                            <select class="form-select" aria-label="Default select example">
+                                            <select class="form-select" aria-label="Default select example" onChange={(e) => setTransInfo({...transInfo, "wards": e.target.value})}>
                                                 <option selected>Vui lòng chọn phường/ xã</option>
-                                                <option value="1">Linh Trung</option>
-                                                <option value="2">Linh Tây</option>
-                                                <option value="3">Linh Đông</option>
+                                                <option value="Linh Trung">Linh Trung</option>
+                                                <option value="Linh Tây">Linh Tây</option>
+                                                <option value="Linh Đông">Linh Đông</option>
                                             </select>
                                         </div>
                                     </div>
@@ -141,11 +170,11 @@ export const PayPage = () => {
                                             Đặt hàng
                                         </button>
                                         
-                                        <div className={`payment-choose ${current === "off" && 'pay-active'}`} onClick={()=> setCurrent("off")}>
+                                        <div className={`payment-choose ${transInfo.curent === "off" && 'pay-active'}`} onClick={()=> setTransInfo({...transInfo, "curent": "off"})}>
                                             <img src='https://lzd-img-global.slatic.net/g/tps/tfs/TB1ZP8kM1T2gK0jSZFvXXXnFXXa-96-96.png_2200x2200q75.jpg_.webp' />
                                             <span>Thanh toán khi nhận hàng</span>
                                         </div>
-                                        <div className={`payment-choose ${current === "on" && 'pay-active'}`} onClick={()=> setCurrent("on")}>
+                                        <div className={`payment-choose ${transInfo.curent === "on" && 'pay-active'}`} onClick={()=> setTransInfo({...transInfo, "curent": "on"})}>
                                             <img src='https://lzd-img-global.slatic.net/g/tps/tfs/TB1Iey_osKfxu4jSZPfXXb3dXXa-96-96.png_2200x2200q75.jpg_.webp'/>
                                             <span>Thanh toán qua ví MoMo</span>
                                         </div>
@@ -179,12 +208,18 @@ export const PayPage = () => {
                                             <strong>Tổng cộng</strong>
                                             <strong>{formatCurrency(getTotal(cart))}</strong>
                                         </div>
+                                        
+                                        <div className='role-check'>
+                                            <input type="checkbox" checked={role} onChange={handleChange}/>
+                                            <span>Tôi đồng ý với các chính sách của Abelo.</span>
+                                            <Link to="/policy"><span className='role'>Xem chính sách</span></Link>
+                                        </div>
 
-                                        <Link to='#'>
+                                        
                                             <button className='btn btn-warning' style={{width: "100%" }} onClick={()=>handleClick(cart)}>
                                                 Đặt hàng
                                             </button>
-                                        </Link>
+                                        
                                         <Link to='/cart'>
                                             <button className='btn btn-primary' style={{marginTop: "10px", width: "100%" }}>
                                                 Quay lại giỏ hàng

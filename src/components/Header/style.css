@@ -2,19 +2,67 @@
     background-color: white;
 }
 
-.bg-main, .mid-header {
-    background-color: whitesmoke;
+.bg-bg, .mid-header {
+    background-color: black;
 }
 
 .search input {
     background-color: white;
 }
 
-.user-menu span{
+.user-menu i{
     font-size: 30px;
+    padding-left: 15px;
     cursor: pointer;
 }
 
 .user-menu span:hover {
-    color: rgb(45, 45, 245);
+    /* color: rgb(45, 45, 245); */
+}
+
+.dropdown > a{
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 0;
+    font-weight: 700;
+}
+
+.dropdown > a:hover {
+    background-color: white;
+    color: black;
+}
+
+.dropdown > a:active  {
+    background-color: white;
+    color: black;
+}
+
+.dropdown-menu > li > a {
+    text-transform: none ;
+    color: black;
+
+}
+
+.dropdown-menu {
+    margin-top: 20px;
+}
+
+.user-menu > li > a, .user-menu > li > i, .mid-header span{
+    color: white;
+    background: black;
+}
+
+
+.position-absolute {
+    top: 16px
+}
+
+.user-menu .dropdown > a:hover, .user-menu .dropdown > a  {
+    background-color: black;
+    color: white;
+}
+
+.user-drop > .dropdown-menu > li > a{
+    color: white;
 }

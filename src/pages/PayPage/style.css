@@ -95,3 +95,20 @@
 .pay-check img {
     padding: 4px;
 }
+
+.role-check {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+
+
+}
+
+.role-check span {
+    padding-left: 4px;
+}
+
+.role {
+    color: rgb(41, 140, 247);
+    text-decoration: underline;
+}

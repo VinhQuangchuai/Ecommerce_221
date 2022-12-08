@@ -14,6 +14,8 @@ function App() {
   const [cart, setCart] = useState([])
   const [payment, setPayment] = useState([])
   const [tmpcart, setTmpCart] = useState([])
+  const [ordered, setOrdered] = useState([])
+
 
   
 
@@ -48,11 +50,15 @@ function App() {
     setTmpCart([...tmpcart, data])
   }
 
-  console.log(tmpcart)
+  const setToOrdered = (data) => {
+    setOrdered([...ordered, data])
+  }
+
+  console.log(ordered)
 
   return (
     <ProductContext.Provider value={
-      {data, setData, cart, setDataToCart, setCart, payment, setPayment, tmpcart, setDataToTmp, setTmpCart}}
+      {data, setData, cart, setDataToCart, setCart, payment, setPayment, tmpcart, setDataToTmp, setTmpCart, ordered, setToOrdered, setOrdered}}
       >
       <Router>
         <div className="App">

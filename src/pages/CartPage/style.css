@@ -13,6 +13,7 @@
 
 .cart-wrapper {
     background-color: whitesmoke;
+    /* height: 0vh; */
 }
 
 .cart-page__empty .btn {
