@@ -38,7 +38,7 @@ export const OrderedPage = () => {
                                              <span>Tình trạng: Đang giao</span>
                                              {
                                                 ordered.data.length > 0 && ordered.data.map((i, index) => (
-                                                        <div className="cart-item" key={index}>
+                                                        <div className="cart-item cart-item-order" key={index}>
                                                             <div className='cart-select' style={{width: "100%"}}>
                                                                 <div className='select-checkbox order'>
                                                                     <img src={`https://hcmut-e-commerce.herokuapp.com/${i.product.product_image01}`} alt="" className="produvt-thumbnail"/>

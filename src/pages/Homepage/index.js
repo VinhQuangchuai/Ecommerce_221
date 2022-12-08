@@ -5,13 +5,16 @@ import '../../assets/css/fonts.css';
 import './style.css'
 import { ProductContext } from '../../components/Context';
 import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsChevronRight, BsChevronLeft, BsCartPlus, BsHeart } from 'react-icons/bs';
+import { formatCurrency } from '../../ultil';
 
 
 export const HomePage = () => {
     const [viewLast, setViewLast] = useState("latest-products")
     const [viewBS, setViewBS] = useState("latest-products")
+
+    const navigator = useNavigate()
 
     useEffect(() => {
         window.scrollTo({
@@ -65,7 +68,13 @@ export const HomePage = () => {
     }
 
     const AddToCart = (data, product) => {
-        data.setDataToCart({product, "quantity": 1})
+        if(localStorage.getItem('current-user') === null) {
+            navigator('/login')
+        }
+        else {
+            data.setDataToCart({product, "quantity": 1})
+            alert("thêm thành công")
+        }
     }
 
     return (
@@ -203,8 +212,8 @@ export const HomePage = () => {
                                                             {product.product_name}
                                                         </div>
                                                         <div className="product-card-price">
-                                                            <span><del>${product.product_old_price}</del></span>
-                                                            <span className="curr-price">${product.product_present_price}</span>
+                                                            <span><del>{formatCurrency(Number(product.product_old_price))}</del></span>
+                                                            <span className="curr-price">{formatCurrency(Number(product.product_present_price))}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -267,8 +276,8 @@ export const HomePage = () => {
                                                             {product.product_name}
                                                         </div>
                                                         <div className="product-card-price">
-                                                            <span><del>${product.product_old_price}</del></span>
-                                                            <span className="curr-price">${product.product_present_price}</span>
+                                                            <span><del>{formatCurrency(Number(product.product_old_price))}</del></span>
+                                                            <span className="curr-price">{formatCurrency(Number(product.product_present_price))}</span>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -8,6 +8,8 @@ import { formatCurrency } from '../../ultil'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
+import Swal from "sweetalert2";
+import { getPayment } from '../../api/product'
 
 export const PayPage = () => {
     
@@ -40,7 +42,7 @@ export const PayPage = () => {
     }
 
     const getTrans = (cart) => {
-        return total(cart)*0.01
+        return 30000
     }
 
     const getTotal = (cart) => {
@@ -62,6 +64,20 @@ export const PayPage = () => {
     const handleClick = (cart) => {
         if(role) {
             alert("Mua hàng thành công")
+            getPayment({amount: getTotal(cart)})
+            .then((res) => {
+                console.log(res.data);
+                window.open(res.data, '_blank', 'noopener,noreferrer');
+            })
+            .catch((err) => {
+                Swal.fire({
+                title: "Payment Failed",
+                text: "There is some error in payment process",
+                icon: "error",
+                confirmButtonText: "Close",
+                });
+                console.log(err);
+            });
             cart.setToOrdered({data: cart.payment, info: transInfo, time: moment(), totalprice: getTotal(cart)})
             cart.setCart(cart.tmpcart)
             cart.setPayment([])
@@ -69,8 +85,6 @@ export const PayPage = () => {
             navigate('/cart')
         }
     }
-    console.log(transInfo)
-
 
     const handleChange = () => {
         setRole(!role)

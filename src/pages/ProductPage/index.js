@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { getProductById } from '../../api/product';
 import { BsFillStarFill, BsCartPlus, BsHeart } from 'react-icons/bs';
 import { BiChevronsRight, BiPlus, BiMinus, BiChevronRight, BiChevronLeft } from 'react-icons/bi';
@@ -8,12 +8,14 @@ import '../../assets/css/index.css'
 import '../../assets/css/grid.css';
 import '../../assets/css/fonts.css';
 import { Link } from 'react-router-dom';
+import { formatCurrency } from '../../ultil';
 
 export const ProductPage = () => {
 
     const [isActive, setActive] = React.useState(false);
     const [product, setProduct] = React.useState();
 
+    const navigator = useNavigate()
     const imgRef = React.createRef();
     const match = useParams({id: Number})
     useEffect(() => {
@@ -21,7 +23,13 @@ export const ProductPage = () => {
     }, [match.id])
 
     const AddToCart = (func) => {
-        func.setDataToCart({product, "quantity": 1})
+        if(localStorage.getItem('current-user') === null) {
+            navigator('/login')
+        }
+        else {
+            func.setDataToCart({product, "quantity": 1})
+            alert('Thêm thành công')
+        }
     }
 
 
@@ -130,19 +138,19 @@ export const ProductPage = () => {
                                     </button>
                                     <div className={isActive ? "product-detail-description-content active" : "product-detail-description-content"}>
                                         <p>
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit laudantium obcaecati odit dolorem, doloremque accusamus esse neque ipsa dignissimos saepe quisquam tempore perferendis deserunt sapiente! Recusandae illum totam earum ratione.
-                                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam incidunt maxime rerum reprehenderit voluptas asperiores ipsam quas consequuntur maiores, at odit obcaecati vero sunt! Reiciendis aperiam perferendis consequuntur odio quas. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut quaerat eum veniam doloremque nihil repudiandae odio ratione culpa libero tempora. Expedita, quo molestias. Minus illo quis dignissimos aliquid sapiente error!
+                                            {product && product.product_description}
+                                            {product && product.product_description}
                                         </p>
                                         <img src={product && `https://hcmut-e-commerce.herokuapp.com/${product.product_image01}`} />
 
                                         <p>
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis accusantium officia, quae fuga in exercitationem aliquam labore ex doloribus repellendus beatae facilis ipsam. Veritatis vero obcaecati iste atque aspernatur ducimus.
-                                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat quam praesentium id sit amet magnam ad, dolorum, cumque iste optio itaque expedita eius similique, ab adipisci dicta. Quod, quibusdam quas. Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, in corrupti ipsam sint error possimus commodi incidunt suscipit sit voluptatum quibusdam enim eligendi animi deserunt recusandae earum natus voluptas blanditiis?
+                                            {product && product.product_description}
+                                            {product && product.product_description}
                                         </p>
                                         <img src={product && `https://hcmut-e-commerce.herokuapp.com/${product.product_image01}`} />
 
                                         <p>
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi ullam quam fugit veniam ipsum recusandae incidunt, ex ratione, magnam labore ad tenetur officia! In, totam. Molestias sapiente deserunt animi porro?
+                                            {product && product.product_description}
                                         </p>
                                     </div>
                                 </div>
@@ -292,8 +300,8 @@ export const ProductPage = () => {
                                                             {product.product_name}
                                                         </div>
                                                         <div className="product-card-price">
-                                                            <span><del>${product.product_old_price}</del></span>
-                                                            <span className="curr-price">${product.product_present_price}</span>
+                                                            <span><del>{formatCurrency(Number(product.product_old_price))}</del></span>
+                                                            <span className="curr-price">{formatCurrency(Number(product.product_present_price))}</span>
                                                         </div>
                                                     </div>
                                                 </div>

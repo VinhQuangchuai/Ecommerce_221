@@ -77,7 +77,7 @@ export const CartPage = () => {
             cart.setTmpCart(cart.tmpcart.filter(i => i.product.product_name !== item.product.product_name))
         }
         else {
-            setSelect(select.filter(i => i.product.product_name != item.product.product_name))
+            setSelect(select.filter(i => i.product.product_name !== item.product.product_name))
             cart.setDataToTmp(item)
         }
     }

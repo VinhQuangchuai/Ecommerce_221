@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { formatter } from '../../ultil'
 import './style.css'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ProductContext } from '../Context';
 
 
@@ -10,6 +10,9 @@ import { ProductContext } from '../Context';
 export const Product = (props) => {
 
     const [isEnter, setIsEnter] = useState("leave")
+    const navigate = useNavigate()
+
+    console.log(navigate)
 
     const handleEnter = () => {
         setIsEnter("enter")
@@ -20,8 +23,13 @@ export const Product = (props) => {
     }
 
     const AddToCart = (data, product) => {
-        alert("Thêm thành cônng")
-        data.setDataToCart({product, "quantity": 1})
+        if (localStorage.getItem('current-user') === null) {
+            navigate('/login')
+        }
+        else {
+            alert("Thêm thành cônng")
+            data.setDataToCart({product, "quantity": 1})
+        }
     }
 
     return (
@@ -52,9 +60,7 @@ export const Product = (props) => {
                             </div>
                         </div>
                         <div className={`product-btn ${isEnter}`}>
-                            <Link>
-                                <button  onClick={()=>AddToCart(cart, props.product)}>ADD TO CART</button>
-                            </Link>
+                            <button  onClick={()=>AddToCart(cart, props.product)}>ADD TO CART</button>
                         </div>
 
                     </div>

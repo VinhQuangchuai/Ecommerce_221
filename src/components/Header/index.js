@@ -21,6 +21,7 @@ export default function Header() {
 
     const handleLogout = () => {
         localStorage.removeItem("current-user")
+        
     }
 
     return (
