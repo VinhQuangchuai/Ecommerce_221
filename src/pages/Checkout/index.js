@@ -79,7 +79,7 @@ export const Checkout = () => {
     } else {
       await axios
         .get(
-          `https://online-gateway.ghn.vn/shiip/public-api/master-data/district`,
+          `https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district`,
           {
             headers: {
               token: "c6109bdb-6597-11ed-9dc6-f64f768dbc22",
@@ -104,7 +104,7 @@ export const Checkout = () => {
     } else {
       await axios
         .get(
-          "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward",
+          "https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward",
           {
             headers: {
               token: "c6109bdb-6597-11ed-9dc6-f64f768dbc22",
@@ -126,7 +126,7 @@ export const Checkout = () => {
     let shipService = [];
     await axios
       .get(
-        "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services",
+        "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services",
         {
           headers: {
             token: "c6109bdb-6597-11ed-9dc6-f64f768dbc22",
@@ -145,7 +145,7 @@ export const Checkout = () => {
 
     await axios
       .get(
-        "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
+        "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
         {
           headers: {
             token: "c6109bdb-6597-11ed-9dc6-f64f768dbc22",
@@ -221,7 +221,7 @@ export const Checkout = () => {
     const getProvinces = async () => {
       const config = {
         method: "get",
-        url: "https://online-gateway.ghn.vn/shiip/public-api/master-data/province",
+        url: "https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province",
         headers: {
           token: "c6109bdb-6597-11ed-9dc6-f64f768dbc22",
         },
