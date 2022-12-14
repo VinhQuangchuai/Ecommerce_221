@@ -1,0 +1,114 @@
+.paypage {
+    width: 75%;
+    margin: auto;
+    padding: 10px 10px;
+    background-color: white;
+}
+
+.paypage-wrapper {
+    background-color: whitesmoke;
+    padding: 20px 0 ;
+
+}
+
+.pay-span {
+    background-color: white;
+    margin: 0 15px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    width: 95%;
+    margin-bottom: 20px;
+}
+
+.paypage-address {
+    /* background-color: whitesmoke; */
+    height: 30px;
+}
+
+.user-infor > div{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+}
+
+.user-infor input {
+    height: 40px;
+    padding: 0 10px;
+    border-radius: 5px;
+    border: 1px solid rgb(217, 217, 217);
+}
+
+.user-infor > div span {
+    font-size: 14px;
+    padding-bottom: 4px;
+}
+
+.paypage-price {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+/* .user-infor {
+    background-color: white;
+    padding: 20px;
+} */
+
+.pay-bill {
+    display: flex;
+    flex-direction: column;
+}
+
+.pay-bill > button {
+    color: white;
+}
+
+.payment-choose {
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid black;
+    /* padding: 10px; */
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pay-active {
+    border: 1px solid rgb(122, 202, 245);
+    background-color: rgb(235, 254, 255);
+}
+
+.payment-choose img {
+    width: 30px;
+    margin-right: 10px;
+}
+
+.pay-check {
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 12px;
+
+}
+.pay-check img {
+    padding: 4px;
+}
+
+.role-check {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+
+
+}
+
+.role-check span {
+    padding-left: 4px;
+}
+
+.role {
+    color: rgb(41, 140, 247);
+    text-decoration: underline;
+}

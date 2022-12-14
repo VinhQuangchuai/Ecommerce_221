@@ -1,8 +1,9 @@
 
 
 export const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
+    
     currency: 'VND',
+    style: 'currency',
     minimumFractionDigits: 0
   })
 
