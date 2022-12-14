@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/demo-deploy-github-pages/precache-manifest.4d88a12218192c206ae05f04e619dea0.js"
+  "/Mklop0098/TMDT-v4.git/precache-manifest.fe5bbc5adfc836f5332de3512e57e91e.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/demo-deploy-github-pages/index.html", {
+workbox.routing.registerNavigationRoute("/Mklop0098/TMDT-v4.git/index.html", {
   
   blacklist: [/^\/_/,/\/[^/]+\.[^/]+$/],
 });
