@@ -179,3 +179,46 @@ export const products = [
         brand: "studio design",
     },
 ]
+
+export const famous = [
+    {
+        img: "https://lh3.googleusercontent.com/IqFtu_Hq7dQkOuTjKwVTjKV5Z1qK3FsuX3yX6Ab30i_yXZ2B1dFs8uQwQ9zgTt3UZts3RnuYx-ujvQW0i5Ox2UDhrqxeehI=w400-rw",
+        brand: "Asus"
+    },
+    {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGnH0Eqp8_gaeuG0H8VprDk6Cgcz1WGaKelQ&usqp=CAU",
+        brand: "Intel"
+    },    
+    {
+        img: "https://www.amd.com/system/files/2022-03/1287688-Ryzen-board-1260x709_0.jpg",
+        brand: "AMD"
+    },    
+    {
+        img: "https://www.phucanh.vn/media/news/0710_msi-cua-nuoc-nao-1.jpg",
+        brand: "MSI"
+    },
+
+]
+
+export const deal = [
+    {
+        img: "https://www.pcguide.com/wp-content/uploads/2021/11/Black-Friday-CPU.jpg",
+        name: "Black Friday siêu DEALS",
+        time: "01/11 - 18/12/2022"
+    },
+    {
+        img: "https://cdn.mobilesyrup.com/wp-content/uploads/2022/08/Intel-gamer-days.jpg",
+        name: "Ỉntel Gamer Days",
+        time: "25/11 - 29/12/2022"
+    },
+    {
+        img: "https://www.pcguide.com/wp-content/uploads/2022/10/Prime-Early-Access-Sale-Intel.jpg",
+        name: "Đặt hàng sớm hưởng giá tốt",
+        time: "25/11 - 29/12/2022"
+    },
+    {
+        img: "https://cdn0.desidime.com/SEO/11-11-Singles-Day-SEO.png",
+        name: "Độc thân nhận quà xịn", 
+        time: "10/11 - 12/11/2022"
+    }
+]

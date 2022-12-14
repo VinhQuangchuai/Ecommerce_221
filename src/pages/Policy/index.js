@@ -32,7 +32,7 @@ export const Policy = () => {
                 
                 
                 
-                <p><strong>Hình thức hoàn trả:&nbsp;</strong>Sẽ đổi mới sản phẩm cho khách hàng, trường hợp không còn sản phẩm hàng hóa đó trong kho, công ty cam kết hoàn trả 100% phí mà khách hàng đã thanh toán cho chúng tôi thông qua các hình thức như: tiền mặt tại công ty hoặc chuyển khoản cho khách hàng. Thời gian hoàn lại trong vòng 10 ngày làm việc.</p>
+                <p><strong>Hình thức hoàn trả:&nbsp;</strong>Sẽ đổi mới sản phẩm cho khách hàng, trường hợp không còn sản phẩm hàng hóa đó trong kho, công ty cam kết hoàn trả 100% phí mà khách hàng đã thanh toán cho chúng tôi thông qua các hình thức như: tiền mặt tại công ty hoặc chuyển khoản cho khách hàng. Thời gian hoàn lại trong vòng 10 ngày làm việc (Ngày làm việc không bao gồm T7, CN và ngày lễ).</p>
                 
                 
                 
@@ -51,10 +51,12 @@ export const Policy = () => {
                 <h3> 2. Điều kiện trả hàng</h3>
                 
                 
-                
-                <p>Người mua đồng ý rằng cô ấy/anh ấy chỉ có thể yêu cầu trả hàng và hoàn tiền trong các trường hợp sau:<br/>• Người mua đã thanh toán nhưng không nhận được sản phẩm;<br/>• Sản phẩm bị lỗi hoặc bị hư hại trong quá trình vận chuyển;<br/>• Người bán giao sai sản phẩm cho Người mua (VD: sai thông số, sai hãng cung ứng, v.vv…);</p>
-                
-                
+                <ul>
+                    <li>Người mua đã thanh toán nhưng không nhận được sản phẩm.</li>
+                    <li>Sản phẩm bị lỗi hoặc bị hư hại trong quá trình vận chuyển</li>
+                    <li>Người bán giao sai sản phẩm cho Người mua (VD: sai thông số, sai hãng cung ứng, v.vv…)</li>
+                </ul>
+                            
                 
                 <h3>3. Không thay đổi ý định mua hàng</h3>
                 
@@ -78,7 +80,12 @@ export const Policy = () => {
                 
                 <p>Người mua đồng ý bồi thường và giữ cho <strong>Abelo</strong> không bị thiệt hại, hoặc chống lại bất kỳ việc khiếu nại, kiện tụng, hoặc các nghĩa vụ/trách nhiệm, thiệt hại, tuyên bố, hình phạt, tiền phạt, các chi phí và phí tổn (bao gồm, nhưng không giới hạn bất kỳ chi phí giải quyết tranh chấp nào khác) có liên quan phát sinh từ hoặc có liên quan đến bất kỳ hành động nào của <strong>Abelo</strong> theo Chính sách Trả hàng và Hoàn tiền này.</p>
                 
-                                        
+                <h3>5. Cách thức đổi / trả hàng</h3>
+                <ul>
+                    <li>Quý khách đóng gói sản phẩm dự kiến đổi trả cùng với các phụ kiện, tài liệu hướng dẫn, thẻ bảo hành và hàng tặng kèm (nếu có)… vào thùng / hộp đựng sản phẩm của nhà sản xuất, giống như tình trạng ban đầu khi Quý khách nhận hàng (trường hợp không có thùng / hộp ban đầu, Quý khách có thể sử dụng các vật dụng khác để thay thế).</li>
+                    <li>Quý khách lưu ý kiện hàng sau khi đóng gói cần đảm bảo đúng như những gì Quý khách đã nhận ban đầu và không được móp, méo hay trầy xước…</li>
+                    <li>Quý khách mang kiện hàng kèm hoá đơn mua hàng hoặc phiếu xuất kho và mẫu Yêu cầu đổi / trả hàng đã điền đầy đủ thông tin đến cửa hàng <strong>Abelo</strong> tại địa chỉ 123 Đường Tân Lập, phường Đông Hòa, thành phố Dĩ An tỉnh Bình Dương. </li>
+                </ul>   
             </div>
         </div>
     )

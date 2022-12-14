@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { formatCurrency } from '../../ultil'
 import { ProductContext } from '../../components/Context'
 import { Link, useNavigate } from 'react-router-dom'
-
+import { formatter } from '../../ultil'
 export const voucherlist = [
     {
         code: "VOUCHER2022",
@@ -140,11 +140,20 @@ export const CartPage = () => {
                                                             <div className='select-checkbox'>
                                                                 <input type="checkbox" checked={check(i)} onChange={() =>handleChange(i, cart)}/>
                                                                 
-                                                                <img src={`https://hcmut-e-commerce.herokuapp.com/${i.product.product_image01}`} alt="" className="produvt-thumbnail"/>
+                                                                <img src={`https://hcmut-e-commerce.herokuapp.com/${i.product.product_image01}`} alt="" className="product-thumbnail"/>
                                                                 <div className='cart_product-info'>
                                                                     <span>{i.product.product_name}</span>
-                                                                    <span>{i.product.product_brand}</span>
-                                                                    <span className='discount-info'>Mua 3, giảm 2%</span>
+                                                                    <span>Thương hiệu:<strong style={{color: "rgb(107, 66, 241)"}}> {i.product.product_brand}</strong></span>
+                                                                    <span className='discount-info'>Tiết kiệm {formatCurrency(i.product.product_old_price - i.product.product_present_price)}</span>
+                                                                </div>
+                                                                <div className="product-detail__line3 cart-detail-2">
+                                                                    
+                                                                    {
+                                                                        <p className="product-detail__line3-current">
+                                                                            {formatter.format(i.product.product_old_price)}
+                                                                        </p>
+                                                                    }
+                                                                    <p className="product-detail__line3-discount">{formatter.format(i.product.product_present_price)}</p>
                                                                 </div>
                                                                 <div className='cart_product-quantity'>
                                                                     <button className='btn btn-outline-primary'>-</button>
@@ -169,10 +178,6 @@ export const CartPage = () => {
                                             <span>{formatCurrency(total(cart))}</span>
                                         </div>
                                         <div className='cart-detail'>
-                                            <span>Phí vận chuyển</span>
-                                            <span>{formatCurrency(getTrans(cart))}</span>
-                                        </div>
-                                        <div className='cart-detail'>
                                             <span>Chọn mã giảm giá</span>
                                         </div>
                                         <div className="input-group mb-3">
@@ -190,14 +195,14 @@ export const CartPage = () => {
                                             <button className="btn btn-outline-primary" type="button" id="button-addon2">Áp dụng</button>
                                             </div>
                                         <div className='cart-detail' style={{paddingBottom: "16px"}}>
-                                            <strong>Tổng cộng</strong>
+                                            <strong>Tổng cộng (Đã bao gồm VAT)</strong>
                                             <strong>{formatCurrency(getTotal(cart))}</strong>
                                         </div>
                                         <Link to={`${select.length > 0 ? '/pay' : '#'}`} style={{width: "100%"}}>
                                             <button type="button" className="btn btn-outline-primary col-12" onClick={()=>handleCLick(cart)} 
                                             style={{width: "100%"}}>
                                                 
-                                                    Xác nhận giỏ hàng
+                                                    Tiếp tục
                                                 ({select.length})
                                             </button>
                                         </Link> 

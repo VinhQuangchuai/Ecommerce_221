@@ -149,11 +149,11 @@ export const PayPage = () => {
                                                 <div className="cart-item" key={index}>
                                                     <div className='cart-select' style={{width: "100%"}}>
                                                         <div className='select-checkbox pay-check'>
-                                                            <img src={`https://hcmut-e-commerce.herokuapp.com/${i.product.product_image01}`} alt="" className="produvt-thumbnail"/>
+                                                            <img src={`https://hcmut-e-commerce.herokuapp.com/${i.product.product_image01}`} alt="" className="product-thumbnail"/>
                                                             <div className='cart_product-info'>
                                                                 <span>{i.product.product_name}</span>
                                                                 <span>{i.product.product_brand}</span>
-                                                                <span className='discount-info'>Mua 3, giảm 2%</span>
+                                                                <span className='discount-info'>Tiết kiệm {formatCurrency(i.product.product_old_price - i.product.product_present_price)}</span>
                                                             </div>
                                                             <div className='cart_product-quantity paypage-price'>
                                                                 <div className="product-detail__line3 paypage-price">
@@ -190,7 +190,7 @@ export const PayPage = () => {
                                         </div>
                                         <div className={`payment-choose ${transInfo.curent === "on" && 'pay-active'}`} onClick={()=> setTransInfo({...transInfo, "curent": "on"})}>
                                             <img src='https://lzd-img-global.slatic.net/g/tps/tfs/TB1Iey_osKfxu4jSZPfXXb3dXXa-96-96.png_2200x2200q75.jpg_.webp'/>
-                                            <span>Thanh toán qua ví MoMo</span>
+                                            <span>Thanh toán qua PayPal</span>
                                         </div>
                                         <span>Thông tin đơn hàng</span>
                                         <div className='cart-detail'>

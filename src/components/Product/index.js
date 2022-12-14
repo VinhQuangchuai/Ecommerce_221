@@ -3,7 +3,7 @@ import { formatter } from '../../ultil'
 import './style.css'
 import { Link, useNavigate } from "react-router-dom";
 import { ProductContext } from '../Context';
-
+import discount from '../../assets/imgs/download.svg'
 
 
 
@@ -38,7 +38,14 @@ export const Product = (props) => {
                 cart => (
                     <div className="product-container" onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
                         <div className="product-wrapper">
-                            <img src={`https://hcmut-e-commerce.herokuapp.com/${props.product.product_image01}`} alt="" className="produvt-thumbnail"/>
+                            <div className='product-wrapper__img'>
+                                <img src={`https://hcmut-e-commerce.herokuapp.com/${props.product.product_image01}`} alt="" className="produvt-thumbnail"/>
+                                <div className={`product-disc`}>
+                                    {/* <img src={discount}/> */}
+                                    <span>TIẾT KIỆM</span>
+                                    <span>{formatter.format(props.product.product_old_price - props.product.product_present_price)}</span>
+                                </div>
+                            </div>
                             <div className="product-detail">
                                 <p className="product-detail__line1">{props.product.product_brand}</p>
                                 <p className="product-detail__line2">{props.product.product_name}</p>

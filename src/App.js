@@ -54,7 +54,7 @@ function App() {
     setOrdered([...ordered, data])
   }
 
-  console.log(ordered)
+  console.log(data)
 
   return (
     <ProductContext.Provider value={

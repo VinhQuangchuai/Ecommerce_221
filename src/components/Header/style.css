@@ -66,3 +66,9 @@
 .user-drop > .dropdown-menu > li > a{
     color: white;
 }
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}

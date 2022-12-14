@@ -136,11 +136,16 @@ export default function Header() {
                                                         </li>
                                                         <li>
                                                             <Link to={'/policy'}>   
-                                                                <a class="dropdown-item" href="#">Đổi trả hàng & Hoàn tiền</a>
+                                                                <a class="dropdown-item" href="#">Bảo hành</a>
                                                             </Link>
                                                         </li><li>
                                                             <Link to={'/policy'}>   
                                                                 <a class="dropdown-item" href="#">Liên hệ với chúng tôi</a>
+                                                            </Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link to={'/discount'}>   
+                                                                <a class="dropdown-item" href="#">Khuyến mãi</a>
                                                             </Link>
                                                         </li>
                                                     </ul>

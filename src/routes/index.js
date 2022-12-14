@@ -6,6 +6,7 @@ import { PayPage } from "../pages/PayPage";
 import { LoginPage } from "../pages/LoginPage";
 import { Policy } from "../pages/Policy";
 import { OrderedPage } from "../pages/OrderedPage";
+import { DiscountPage } from "../pages/DiscountPage";
 
 
 export const publishRoutes = [
@@ -17,6 +18,8 @@ export const publishRoutes = [
     { path: '/login', component: LoginPage },
     { path: '/policy', component: Policy },
     { path: '/order', component: OrderedPage },
+    { path: '/discount', component: DiscountPage },
+
 
 ];
 
