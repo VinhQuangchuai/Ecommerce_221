@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/VinhQuangchuai/Ecommerce_221.git/precache-manifest.3306d0c90f6213a33753f0d68dc5394a.js"
+  "/demo-deploy-github-pages/precache-manifest.4d88a12218192c206ae05f04e619dea0.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/VinhQuangchuai/Ecommerce_221.git/index.html", {
+workbox.routing.registerNavigationRoute("/demo-deploy-github-pages/index.html", {
   
   blacklist: [/^\/_/,/\/[^/]+\.[^/]+$/],
 });
