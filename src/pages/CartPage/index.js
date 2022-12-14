@@ -33,9 +33,9 @@ export const CartPage = () => {
         return total
     }
 
-    const getTrans = (cart) => {
-        return total(cart)*0.01
-    }
+    // const getTrans = (cart) => {
+    //     return total(cart)*0.01
+    // }
 
     const getTotal = (cart) => {
         var sum = 0
@@ -45,7 +45,7 @@ export const CartPage = () => {
             }
         })
 
-        sum += getTrans(cart) + total(cart)
+        sum += total(cart)
         return sum
     }
         
