@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import {getPayment} from "../../api/product"
+import {getPayment, sendMail} from "../../api/product"
 import {
   AutoComplete,
   Button,
@@ -18,9 +18,11 @@ import {
 import { Convert } from "easy-currencies";
 
 import "./style.css";
+import { ConsoleSqlOutlined } from "@ant-design/icons";
 const { Option } = Select;
 const initialFvalues = {
-  name: "",
+  lname: "",
+  fname: "",
   phone: "",
   email: "",
   address: "",
@@ -46,13 +48,12 @@ const currenciesConvert = async (vnd) => {
 };
 
 export const Checkout = () => {
-  const [value, setValue] = useState(initialFvalues);
+  const [values, setValues] = useState(initialFvalues);
   const [provinces, setProvinces] = useState(initialProvince);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
   const [shippingFee, setShippingFee] = useState(0);
   const [total, setTotal] = useState(0);
-  const navigate = useNavigate();
 
   const [form] = Form.useForm();
 
@@ -69,23 +70,36 @@ export const Checkout = () => {
     },
   };
 
-  const handleChangeProvince = async (provinceId) => {
-    value.province = provinceId;
-    console.log(provinceId);
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value
+    })
 
-    if (provinceId === 0) {
+  }
+
+  const handleChangeProvince = value => {
+    setValues({
+      ...values,
+      "province": value
+    }
+      
+    )
+
+    if (value === 0) {
       setDistricts([]);
       setWards([]);
     } else {
-      await axios
+      axios
         .get(
-          `https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district`,
+          `https://online-gateway.ghn.vn/shiip/public-api/master-data/district`,
           {
             headers: {
               token: "c6109bdb-6597-11ed-9dc6-f64f768dbc22",
             },
             params: {
-              province_id: provinceId,
+              province_id: value,
             },
           }
         )
@@ -93,18 +107,23 @@ export const Checkout = () => {
           setDistricts(res.data.data);
         });
     }
+
+
   };
 
   const handleChangeDistrict = async (districtId) => {
-    value.district = districtId;
-    console.log(districtId);
+    
+    setValues({
+      ...values,
+      "district": districtId
+    })
 
     if (districtId === 0) {
       setWards([]);
     } else {
       await axios
         .get(
-          "https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward",
+          "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward",
           {
             headers: {
               token: "c6109bdb-6597-11ed-9dc6-f64f768dbc22",
@@ -118,15 +137,18 @@ export const Checkout = () => {
           setWards(res.data.data);
         });
     }
+
   };
 
   const handleChangeWard = async (wardId) => {
-    value.ward = wardId;
-    console.log(wardId);
+    setValues({
+      ...values,
+      "ward": wardId
+    })
     let shipService = [];
     await axios
       .get(
-        "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services",
+        "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services",
         {
           headers: {
             token: "c6109bdb-6597-11ed-9dc6-f64f768dbc22",
@@ -134,18 +156,17 @@ export const Checkout = () => {
           params: {
             shop_id: 3457944,
             from_district: 1452,
-            to_district: value.district,
+            to_district: values.district,
           },
         }
       )
       .then((res) => {
         shipService = res.data.data;
-        console.log(shipService);
       });
 
     await axios
       .get(
-        "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
+        "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
         {
           headers: {
             token: "c6109bdb-6597-11ed-9dc6-f64f768dbc22",
@@ -155,18 +176,18 @@ export const Checkout = () => {
             service_id: shipService[0].service_id,
             insurance_value: 50000,
             coupon: null,
-            to_ward_code: value.ward,
-            to_district_id: value.district,
+            to_ward_code: values.ward,
+            to_district_id: values.district,
+            to_province_name: values.province,
             from_district_id: 1452,
-            weight: 500,
-            length: 30,
-            width: 30,
-            height: 50,
+            weight: 200,
+            length: 20,
+            width: 20,
+            height: 20,
           },
         }
       )
       .then((res) => {
-        console.log(res.data.data.total);
         currenciesConvert(res.data.data.total).then((res) => {
           setShippingFee(res.toFixed(2));
         });
@@ -174,54 +195,73 @@ export const Checkout = () => {
   };
 
   const onPayment = (e) => {
-    console.log(parseFloat(total));
-    console.log(parseFloat(shippingFee));
-    console.log(parseFloat(total) + parseFloat(shippingFee));
-    // const data = JSON.stringify({
-    //   amount: parseFloat(total) + parseFloat(shippingFee),
-    // });
-    // const config = {
-    //   method: "post",
-    //   url: "https://hcmut-e-commerce.herokuapp.com/api/payment",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   data: data,
-    // };
+    // console.log(parseFloat(total));
+    // console.log(parseFloat(shippingFee));
+    // console.log(parseFloat(total) + parseFloat(shippingFee));
+
 
     getPayment({amount: parseFloat(total) + parseFloat(shippingFee)})
       .then((res) => {
         console.log(res.data);
         window.location.replace(res.data);
-        // Swal.fire({
-        //   title: "Proceed to Checkout",
-        //   text: "Thank you for your order!",
-        //   icon: "success",
-        //   confirmButtonText: "OK",
-        // }).then((result) => {
-        //   navigate("/");
-        // });
       })
       .catch((err) => {
-        Swal.fire({
-          title: "Payment Failed",
-          text: "There is some error in payment process",
-          icon: "error",
-          confirmButtonText: "Close",
-        });
         console.log(err);
       });
+
+    // const data = JSON.stringify({
+    //   to_name: lname + " " + fname,
+    //   to_phone: phone,
+    //   to_address: address,
+    //   to_ward_code: value.ward,
+    //   to_district_id: value.district,
+    //   weight: 200,
+    //   length: 20,
+    //   width: 20,
+    //   height: 20,
+    //   service_type_id: 2,
+    //   payment_type_id: 1,
+    //   required_note: "KHONGCHOXEMHANG",
+    //   items: 
+
+    // })
+    
+    // const config = {
+    //   "method": "get",
+    //   "url": "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create",
+    //   "headers": {
+    //     "content-type": "application/json",
+    //     "ShopId": "121071",
+    //     "Token": "95e7f4b0-7ba2-11ed-a2ce-1e68bf6263c5"
+    //   },
+    // }
+
+
+
+    const data = {
+      "email": values.email,
+      "subject": "Xac nhan don hang",
+      "body": `Khách hàng ${values.lname + " " + values.fname} số điện thoại ${values.phone} đã mua hàng tại shop.\n \ Đơn hàng của bạn đã được thanh toán thành công và đang được đóng gói để gửi đi.\n \ Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất. \n \ Cảm ơn bạn đã tin tưởng và mua hàng tại shop của chúng tôi.`
+    }
+
+    sendMail(data)
+    .then(res => {
+      console.log(res.data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
   };
 
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
-  };
+  }
 
   useEffect(() => {
     const getProvinces = async () => {
       const config = {
         method: "get",
-        url: "https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province",
+        url: "https://online-gateway.ghn.vn/shiip/public-api/master-data/province",
         headers: {
           token: "c6109bdb-6597-11ed-9dc6-f64f768dbc22",
         },
@@ -232,7 +272,6 @@ export const Checkout = () => {
       });
     };
     getProvinces();
-    provinces.map((province) => console.log(province));
   }, []);
 
   return (
@@ -250,7 +289,7 @@ export const Checkout = () => {
           <Row>
             <Col span={12} className="first-name">
               <Form.Item
-                name="firstname"
+                name="fname"
                 label="First Name"
                 rules={[
                   {
@@ -258,13 +297,14 @@ export const Checkout = () => {
                     message: "Please input your first name!",
                   },
                 ]}
+                onChange={handleChange}
               >
-                <Input />
+                <Input name="fname"/>
               </Form.Item>
             </Col>
             <Col span={12} className="last-name">
               <Form.Item
-                name="lastname"
+                name="lname"
                 label="Last Name"
                 rules={[
                   {
@@ -272,15 +312,16 @@ export const Checkout = () => {
                     message: "Please input your last name!",
                   },
                 ]}
+                onChange={handleChange}
               >
-                <Input />
+                <Input name="lname" />
               </Form.Item>
             </Col>
           </Row>
 
           <Form.Item
-            name="city"
-            label="City"
+            name="province"
+            label="province"
             rules={[
               {
                 required: true,
@@ -290,10 +331,11 @@ export const Checkout = () => {
           >
             <Select
               placeholder="Select a province"
-              onChange={(value) => handleChangeProvince(value)}
+              onChange={handleChangeProvince}
+              name="province"
             >
               {provinces.map((province, index) => (
-                <Option key={index} value={province.ProvinceID}>
+                <Option key={index} name="province" value={province.ProvinceID}>
                   {province.ProvinceName}
                 </Option>
               ))}
@@ -302,7 +344,7 @@ export const Checkout = () => {
 
           <Form.Item
             name="district"
-            label="District"
+            label="district"
             rules={[
               {
                 required: true,
@@ -345,17 +387,18 @@ export const Checkout = () => {
           </Form.Item>
 
           <Form.Item
-            name="street"
-            className="street-input"
-            label="Street Address"
+            name="address"
+            className="address"
+            label="address"
             rules={[
               {
                 required: true,
                 message: "Please input your address!",
               },
             ]}
+            onChange = {handleChange}
           >
-            <Input placeholder="House number and street name" />
+            <Input name="address" placeholder="House number and street name" />
           </Form.Item>
 
           <Form.Item name="apartment">
@@ -363,24 +406,25 @@ export const Checkout = () => {
           </Form.Item>
 
           <Row>
-            <Col span={12} className="first-name">
+            <Col span={12} className="phone">
               <Form.Item
                 name="phone"
-                label="Phone"
+                label="phone"
                 rules={[
                   {
                     required: true,
                     message: "Please input your phone number!",
                   },
                 ]}
+                onChange={handleChange}
               >
-                <Input />
+                <Input name="phone"/>
               </Form.Item>
             </Col>
-            <Col span={12} className="last-name">
+            <Col span={12} className="email">
               <Form.Item
                 name="email"
-                label="E-mail"
+                label="email"
                 rules={[
                   {
                     type: "email",
@@ -391,8 +435,9 @@ export const Checkout = () => {
                     message: "Please input your E-mail!",
                   },
                 ]}
+                onChange={handleChange}
               >
-                <Input />
+                <Input name="email"/>
               </Form.Item>
             </Col>
           </Row>
