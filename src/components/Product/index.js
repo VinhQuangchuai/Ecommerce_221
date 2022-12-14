@@ -23,13 +23,8 @@ export const Product = (props) => {
     }
 
     const AddToCart = (data, product) => {
-        if (localStorage.getItem('current-user') === null) {
-            navigate('/login')
-        }
-        else {
             alert("Thêm thành cônng")
             data.setDataToCart({product, "quantity": 1})
-        }
     }
 
     return (

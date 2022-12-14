@@ -22,16 +22,16 @@ export const ProductPage = () => {
     }, [match.id])
 
     const AddToCart = (func) => {
-        if(localStorage.getItem('current-user') === null) {
-            navigator('/login')
-        }
-        else {
             func.setDataToCart({product, "quantity": 1})
             alert('Thêm thành công')
-        }
+        
     }
 
-    
+    const handleClick = (func) => {
+        func.setDataToCart({product, "quantity": 1})
+        alert('Thêm thành công')
+        navigator('/cart')
+    }
 
 
     useEffect(() => {
@@ -87,7 +87,7 @@ export const ProductPage = () => {
                                             </div>
                                         </div>
                                         <div className='page-button row'>
-                                            <button type="button" class="btn btn-primary col-5">Mua ngay</button>
+                                            <button type="button" class="btn btn-primary col-5" onClick={() => handleClick(data)}>Mua ngay</button>
                                             <button type="button" class="btn btn-primary col-5" onClick={() => AddToCart(data)}>Thêm vào giỏ hàng</button>
                                         </div>
                                     </div>

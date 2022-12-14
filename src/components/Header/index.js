@@ -13,15 +13,7 @@ export default function Header() {
     const navigate = useNavigate()
 
     const handleLink = () => {
-        if(localStorage.getItem('current-user') === null) {
-            navigate('/login')
-        }
-        else navigate('/cart')
-    }
-
-    const handleLogout = () => {
-        localStorage.removeItem("current-user")
-        
+        navigate('/cart')
     }
 
     return (
@@ -97,7 +89,6 @@ export default function Header() {
                                             </a>
                                             <ul class="dropdown-menu">
                                                 <li><Link to={'/order'}><a class="dropdown-item">Đơn hàng</a></Link></li>
-                                                <li><a class="dropdown-item" href="#" onClick={handleLogout}>Đăng xuất</a></li>
                                             </ul>
                                         </li>
                                         <li type="button" class="position-relative">

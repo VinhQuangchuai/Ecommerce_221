@@ -20,12 +20,6 @@ export const voucherlist = [
 export const CartPage = () => {
 
     const navigator = useNavigate()
-
-    useEffect(() => {
-        if(localStorage.getItem('current-user') === null) {
-            navigator('/login')
-        }
-    },[localStorage.getItem('current-user')])
     
     const [voucher, setVoucher] = useState()
     const [checked, setChecked] = useState(false)
