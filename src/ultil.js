@@ -1,4 +1,4 @@
-
+import { Convert } from "easy-currencies"
 
 export const formatter = new Intl.NumberFormat('en-US', {
     
@@ -29,3 +29,8 @@ export const getAllBrand = (data) => {
     });
     return [...new Set(type)].sort((a,b) => a.length - b.length)
 }
+
+export const currenciesConvert = async (vnd) => {
+  const convert = await Convert(parseFloat(vnd)).from("VND").to("USD");
+  return convert.toFixed(2);
+};
