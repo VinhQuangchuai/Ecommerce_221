@@ -25,7 +25,12 @@ export const Defaultlayout = (props) => {
 
 
     const ProductFilter = (data) => {
-        const tmp = [...data]
+        let tmp = [...data]
+        const urlParams = new URLSearchParams(window.location.search);
+        const key = urlParams.get('search');
+        if (key && key !== '') {
+            tmp = tmp.filter(item => item.product_name.toLowerCase().includes(key.toLowerCase()))
+        }
         if (brand) {
             if(type) {
                 return tmp.filter(item => item.product_brand === brand).filter(item => item.product_type === type)
@@ -38,7 +43,7 @@ export const Defaultlayout = (props) => {
             }
             return tmp.filter(item => item.product_type === type)
         } 
-        else return data
+        else return tmp
     }
     return (
         <ProductContext.Consumer>

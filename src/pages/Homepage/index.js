@@ -99,8 +99,7 @@ export const HomePage = () => {
                                                 <h2 className="top-down trans-delay-0-2">
                                                     {data.data.length > 0 && data.data[4].product_brand}
                                                 </h2>
-                                                <p className="top-down trans-delay-0-4">
-                                                    {data.data.length > 0 && data.data[4].product_description}
+                                                <p className="top-down trans-delay-0-4" dangerouslySetInnerHTML={{__html: data.data.length > 0?data.data[4].product_description:''}}>
                                                 </p>
                                                 <div className="top-down trans-delay-0-6">
                                                     <Link to={data.data.length > 0 && `/shop/${data.data[4].idproduct}`}>
@@ -127,8 +126,7 @@ export const HomePage = () => {
                                                 <h2 className="top-down trans-delay-0-2">
                                                     {data.data.length > 0 && data.data[4].product_brand}
                                                 </h2>
-                                                <p className="top-down trans-delay-0-4">
-                                                    {data.data.length > 0 && data.data[4].product_description}
+                                                <p className="top-down trans-delay-0-4" dangerouslySetInnerHTML={{__html: data.data.length > 0?data.data[4].product_description:''}}>
                                                 </p>
                                                 <div className="top-down trans-delay-0-6">
                                                     <Link to="/ProductDetails">

@@ -33,7 +33,7 @@ export const ProductGrid = (props) => {
                             <div className="col-5 productgrid-detail">
                                 <p className="product-detail__line2">{props.product.product_name}</p>
                                 <p className="product-detail__line1">{props.product.product_brand}</p>
-                                <p className="product-detail__line4">{props.product.product_description}</p>
+                                <p className="product-detail__line4" dangerouslySetInnerHTML={{__html: props.product.product_description}}></p>
                             </div>
                             <div className="col-3 productgrid-detail-2">
                                 <p className="product-detail__line4">Availability: 599 In Stock</p>

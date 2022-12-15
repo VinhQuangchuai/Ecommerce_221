@@ -11,11 +11,17 @@ import { ProductContext } from '../Context';
 export default function Header() {
 
     const navigate = useNavigate()
-
+    const [search, setSearch] = React.useState('')
     const handleLink = () => {
         navigate('/cart')
     }
 
+    const handleSearch = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('search', search);
+        console.log(urlParams);
+        window.location.search = urlParams;
+    }
     return (
         <ProductContext.Consumer>
             {
@@ -71,7 +77,7 @@ export default function Header() {
                                 <div className="mid-header container">
                                     <Link to={'./'}><span  className="logo">ABELO</span></Link>
                                     <div className="search">
-                                        <input type="text" placeholder="Search" />
+                                        <input type="text" placeholder="Search" name={search} onChange={(e)=>{setSearch(e.target.value)}}/>
                                         <BiSearchAlt style={{
                                             position: "absolute",
                                             top: "50%",
@@ -79,7 +85,7 @@ export default function Header() {
                                             right: "20px",
                                             cursor: "pointer",
                                             fontSize: "25px"
-                                        }}/>
+                                        }} onClick={handleSearch}/>
                                     </div>
                                     <ul className="user-menu">
                                         <li><a href="#"><BiBell /></a></li>

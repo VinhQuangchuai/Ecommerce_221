@@ -113,17 +113,9 @@ export const ProductPage = () => {
                             <div className='page-bg-third row'>
                                     <div className='col-7'>
                                         <p>Mô tả sản phẩm</p>
-                                        <span>{product.product_description} {product.product_description} {product.product_description}</span>
                                         <img src={`https://hcmut-e-commerce.herokuapp.com/${product.product_image01}`} />
-                                        <span>{product.product_description} {product.product_description} {product.product_description}</span>
-
-
+                                        <span dangerouslySetInnerHTML={{__html: product.product_description}}></span>                                        
                                         <img src={`https://hcmut-e-commerce.herokuapp.com/${product.product_image02}`} />
-                                        <span>{product.product_description} {product.product_description} {product.product_description}</span>
-
-
-                                        <img src={`https://hcmut-e-commerce.herokuapp.com/${product.product_image03}`} />
-
                                     </div>
                                     <div className='pg-detail col-5'>
                                         <p>Thông tin chi tiết</p>
