@@ -201,8 +201,11 @@ export const PayPage = () => {
 
       getPayment({ amount: totalFee })
         .then((res) => {
-          console.log(res.data);
-          window.open(res.data, "_blank");
+          // console.log(res.data);
+          // window.open(res.a, "_blank");dat
+          if (res.data.status == 'success') {
+            window.location.assign(res.data.link);
+          }
         })
         .catch((err) => {
           Swal.fire({
